@@ -28,7 +28,7 @@ STEPS TO FOLLOW:
    Then, from inside this folder:
 
     uv sync
-    uv run streamlit run app.py
+    uv run streamlit run src/app.py
 
    'uv sync' creates a .venv folder and installs everything from uv.lock.
    Run it again only if the dependencies change.
@@ -52,7 +52,7 @@ STEPS TO FOLLOW:
    Install the dependencies and run the app:
 
     python -m pip install -r requirements.txt
-    python -m streamlit run app.py
+    python -m streamlit run src/app.py
 
    Next time, just activate the .venv again before running the app.
    Need another package? pip install it, then add it to requirements.txt
@@ -75,7 +75,16 @@ STEPS TO FOLLOW:
 
 4. EDIT YOUR PORTFOLIO:
    Once the site is loaded, customize your content, skills, and theme
-   in the "data.py" file. Streamlit will update the page live as you save!
+   in the "src/data.py" file.
+
+   Your files go in the "src/assets/" folder. It already has placeholder
+   files you can replace (keep the same names, or change the names in
+   src/data.py):
+
+    src/assets/photo.jpg     your headshot
+    src/assets/resume.pdf    your resume (powers the "Download resume" button)
+    src/assets/project.png   an image for Feature E (featured project)
+   Streamlit will update the page live as you save!
 
 
 -------------------------------------------------------------------------------
@@ -83,9 +92,9 @@ TROUBLESHOOTING:
 -------------------------------------------------------------------------------
 
 - "streamlit is not recognized as an internal or external command":
-  uv:  uv run streamlit run app.py
+  uv:  uv run streamlit run src/app.py
   pip: make sure your .venv is activated, then
-       python -m streamlit run app.py
+       python -m streamlit run src/app.py
 
 - "uv is not recognized" / "uv: command not found":
   Close and reopen your terminal after installing uv. If it still fails,
@@ -111,5 +120,5 @@ TROUBLESHOOTING:
 - Cloud Deployment Note:
   If you deploy your portfolio online (e.g. to Streamlit Community Cloud),
   this repo already includes both uv.lock and requirements.txt, so the
-  host will know what to install.
+  host will know what to install. Set the main file path to: src/app.py
 -------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 # Build a Portfolio
 
-The `app.py` in this repo lets you build a portfolio site in plain Python with Streamlit. If you'd rather build one the way most web developers do, this page covers the usual tools so you can choose what fits you.
+The Streamlit app in `src/` of this repo lets you build a portfolio site in plain Python with Streamlit. If you'd rather build one the way most web developers do, this page covers the usual tools so you can choose what fits you.
 
 None of it is required. Pick one option from each section and start building.
 

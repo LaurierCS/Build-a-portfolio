@@ -21,8 +21,8 @@ NAME = "Your Name"
 HEADLINE = "Your program | What you are aiming for"   # e.g. "Economics student | Aspiring data analyst"
 LOCATION = "City, Province or State"
 OPEN_TO = "Open to: summer 2027 internships"          # or "" to hide it
-PHOTO = "photo.jpg"      # a professional-looking headshot; upload it to this repo
-RESUME = "resume.pdf"    # upload your resume as a PDF with this exact name
+PHOTO = "photo.jpg"      # a professional-looking headshot; put it in src/assets/
+RESUME = "resume.pdf"    # your resume as a PDF with this exact name, in src/assets/
 PAGE_ICON = "💼"         # the little icon in the browser tab
 LAST_UPDATED = "Month Year"
 
@@ -195,7 +195,7 @@ WRITING_AND_TALKS = []
 
 # ---- Feature E: a featured project with a picture ------------
 # Highlight your best project with an image and link.
-# Upload the image to this repo first (e.g. project.png).
+# Put the image in src/assets/ first (e.g. project.png).
 # Example:
 # FEATURED_PROJECT = {
 #     "title": "Featured project",

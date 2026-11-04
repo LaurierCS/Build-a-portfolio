@@ -7,6 +7,8 @@
 #  - This file executes the portfolio builder.
 # ==============================================================
 
+import os
 import runpy
 
-runpy.run_path("build.py", run_name="__main__")
+HERE = os.path.dirname(os.path.abspath(__file__))
+runpy.run_path(os.path.join(HERE, "build.py"), run_name="__main__")

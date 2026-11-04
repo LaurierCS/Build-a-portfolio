@@ -9,6 +9,19 @@ import os
 import importlib
 import streamlit as st
 
+# Paths: this file lives in src/. Your photo, resume and images live in
+# src/assets/, and .streamlit/ lives in the project root (one folder up).
+SRC_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SRC_DIR)
+ASSETS_DIR = os.path.join(SRC_DIR, "assets")
+
+
+def asset(path):
+    """Turn a file name from data.py into a full path in src/assets/."""
+    if not path:
+        return ""
+    return path if os.path.isabs(path) else os.path.join(ASSETS_DIR, path)
+
 # Import and dynamically reload data.py so edits appear immediately
 import data
 importlib.reload(data)
@@ -48,7 +61,7 @@ def apply_theme():
         return
 
     # Sync with .streamlit/config.toml
-    config_dir = ".streamlit"
+    config_dir = os.path.join(ROOT_DIR, ".streamlit")
     config_file = os.path.join(config_dir, "config.toml")
     try:
         os.makedirs(config_dir, exist_ok=True)
@@ -124,19 +137,19 @@ apply_theme()
 # Header: photo on the left, details on the right
 left, right = st.columns([1, 3])
 with left:
-    if os.path.exists(PHOTO):
-        st.image(PHOTO)
+    if os.path.exists(asset(PHOTO)):
+        st.image(asset(PHOTO))
 with right:
     st.title(NAME)
     st.subheader(HEADLINE)
     details = [item for item in (LOCATION, OPEN_TO) if item]
     st.caption("  |  ".join(details))
     # The download button only appears if you have uploaded resume.pdf
-    if os.path.exists(RESUME):
-        with open(RESUME, "rb") as file:
+    if os.path.exists(asset(RESUME)):
+        with open(asset(RESUME), "rb") as file:
             st.download_button(
                 "Download resume", file.read(),
-                file_name=RESUME, mime="application/pdf",
+                file_name=os.path.basename(RESUME), mime="application/pdf",
             )
 
 # The tabs. To ADD A NEW TAB:
@@ -225,8 +238,8 @@ if WRITING_AND_TALKS:
 if FEATURED_PROJECT:
     st.subheader(FEATURED_PROJECT.get("title", "Featured project"))
     img = FEATURED_PROJECT.get("image")
-    if img and os.path.exists(img):
-        st.image(img, caption=FEATURED_PROJECT.get("caption", ""))
+    if img and os.path.exists(asset(img)):
+        st.image(asset(img), caption=FEATURED_PROJECT.get("caption", ""))
     if FEATURED_PROJECT.get("description"):
         st.write(FEATURED_PROJECT["description"])
     if FEATURED_PROJECT.get("link"):
