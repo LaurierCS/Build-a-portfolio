@@ -8,24 +8,57 @@
 
 STEPS TO FOLLOW:
 
-1. INSTALL STREAMLIT:
-   Install Streamlit directly via pip in your terminal:
+   You can set this project up two ways: with uv or with plain Python
+   and pip. Both work. We recommend uv.
 
-    python -m pip install streamlit
+   WHY UV?
+   uv is a Python package manager, like npm for JavaScript. It's much
+   faster than pip, installs the right Python version for you, creates
+   the virtual environment automatically, and uses a lock file (uv.lock)
+   so everyone gets the exact same package versions.
 
-   (Or if you use 'uv'):
-    uv pip install streamlit
-    -- or run without installing: uv run --with streamlit streamlit run app.py
+
+1. OPTION A: UV (RECOMMENDED)
+
+   Install uv (one time):
+    macOS / Linux:   curl -LsSf https://astral.sh/uv/install.sh | sh
+    Windows:         powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+   (Close and reopen your terminal afterwards so the 'uv' command works.)
+
+   Then, from inside this folder:
+
+    uv sync
+    uv run streamlit run app.py
+
+   'uv sync' creates a .venv folder and installs everything from uv.lock.
+   Run it again only if the dependencies change.
+   Need another package? Use 'uv add <package>'. It updates
+   pyproject.toml and uv.lock for you.
 
 
-2. RUN YOUR STREAMLIT APP:
-   Run this command in your terminal:
+2. OPTION B: PLAIN PYTHON + PIP
 
+   Needs Python 3.10 or newer (check with: python --version).
+   From inside this folder, create and turn on a virtual environment:
+
+    macOS / Linux:
+     python3 -m venv .venv
+     source .venv/bin/activate
+
+    Windows (PowerShell):
+     py -m venv .venv
+     .venv\Scripts\Activate.ps1
+
+   Install the dependencies and run the app:
+
+    python -m pip install -r requirements.txt
     python -m streamlit run app.py
 
+   Next time, just activate the .venv again before running the app.
+   Need another package? pip install it, then add it to requirements.txt
+   (and tell uv users, or run 'uv add <package>' yourself).
+
    (Note: If prompted for an email on first run, press Enter to skip it.)
-   (Windows note: If you have multiple Python versions, you can also use:
-    py -m streamlit run app.py)
 
 
 3. VIEW YOUR APP IN YOUR BROWSER:
@@ -50,19 +83,33 @@ TROUBLESHOOTING:
 -------------------------------------------------------------------------------
 
 - "streamlit is not recognized as an internal or external command":
-  Use: python -m streamlit run app.py
+  uv:  uv run streamlit run app.py
+  pip: make sure your .venv is activated, then
+       python -m streamlit run app.py
+
+- "uv is not recognized" / "uv: command not found":
+  Close and reopen your terminal after installing uv. If it still fails,
+  check the install guide: https://docs.astral.sh/uv/getting-started/installation/
 
 - Port 8501 is already in use:
   Streamlit might assign a new port (like http://localhost:8502). Check the
   "Local URL" printed in your terminal, or force port 8501:
-  python -m streamlit run app.py --server.port 8501
+  add --server.port 8501 to the end of your run command.
+
+- Windows: "running scripts is disabled on this system" when activating:
+  Run this once in PowerShell, then try activating again:
+  Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+
+- Ubuntu/Debian: "ensurepip is not available" when creating the .venv:
+  Install the venv package first: sudo apt install python3-venv
+  (or just use uv, which doesn't need it)
 
 - Terminal pauses or hangs at startup:
   Streamlit may be waiting for an email address. Click into the terminal
   and press Enter to continue.
 
 - Cloud Deployment Note:
-  If you ever deploy your portfolio online (e.g. to Streamlit Community Cloud),
-  recreate a requirements.txt file with 'streamlit' inside it so the cloud
-  server knows what to install.
+  If you deploy your portfolio online (e.g. to Streamlit Community Cloud),
+  this repo already includes both uv.lock and requirements.txt, so the
+  host will know what to install.
 -------------------------------------------------------------------------------

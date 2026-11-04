@@ -1,0 +1,2 @@
+# For pip users. uv users: pyproject.toml and uv.lock are the source of truth.
+streamlit>=1.65.0
