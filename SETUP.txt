@@ -1,0 +1,23 @@
+-------------------------------------------------------------------------------
+    SETUP.txt
+-------------------------------------------------------------------------------
+
+    HERE YOU WILL FIND EVERYTHING YOU NEED TO MAKE YOUR PORTFOLIO.
+
+-------------------------------------------------------------------------------
+
+STEPS TO FOLLOW:
+
+1. MAKE SURE YOU HAVE STREAMLIT INSTALLED, RUN COMMAND IN TERMINAL:
+
+    pip install - r requirements.TXT
+
+2. USE STREAMLIT TO RUN YOUR APP, RUN COMMAND IN TERMINAL:
+
+    streamlit run app.py
+
+3. VIEW YOUR APP AND LIVE CHANGES WITH STREAMLIT PORT, OPEN LINK IN BROWSER.
+
+    http://localhost:8501
+
+4. ONCE YOU CAN SEE YOUR APP, EDIT DETAILS IN THE "data.py" FILE.
