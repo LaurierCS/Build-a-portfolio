@@ -1,6 +1,6 @@
 # ==============================================================
 #  BUILD A PORTFOLIO: a professional site, written in Python
-#
+# 
 #  HOW IT WORKS
 #  - Edit this file, then click "Commit changes" on GitHub.
 #  - Your live site updates on its own within a minute or so.
