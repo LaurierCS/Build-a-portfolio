@@ -1,0 +1,10 @@
+# YOUR LOOK: change the colours, commit, and refresh your site.
+# Colours can be hex codes like "#E4572E". Keep the quotes.
+ 
+[theme]
+base = "light"
+primaryColor = "#E4572E"              # buttons and highlights
+backgroundColor = "#FAFAFA"           # page background
+secondaryBackgroundColor = "#EDEDED"  # boxes and tabs
+textColor = "#222222"                 # main text
+font = "sans serif"                   # try "serif" or "monospace"
