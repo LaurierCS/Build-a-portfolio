@@ -8,16 +8,61 @@
 
 STEPS TO FOLLOW:
 
-1. MAKE SURE YOU HAVE STREAMLIT INSTALLED, RUN COMMAND IN TERMINAL:
+1. INSTALL STREAMLIT:
+   Install Streamlit directly via pip in your terminal:
 
-    pip install - r requirements.TXT
+    python -m pip install streamlit
 
-2. USE STREAMLIT TO RUN YOUR APP, RUN COMMAND IN TERMINAL:
+   (Or if you use 'uv'):
+    uv pip install streamlit
+    -- or run without installing: uv run --with streamlit streamlit run app.py
 
-    streamlit run app.py
 
-3. VIEW YOUR APP AND LIVE CHANGES WITH STREAMLIT PORT, OPEN LINK IN BROWSER.
+2. RUN YOUR STREAMLIT APP:
+   Run this command in your terminal:
+
+    python -m streamlit run app.py
+
+   (Note: If prompted for an email on first run, press Enter to skip it.)
+   (Windows note: If you have multiple Python versions, you can also use:
+    py -m streamlit run app.py)
+
+
+3. VIEW YOUR APP IN YOUR BROWSER:
+   Streamlit will usually open your browser automatically.
+   If not, open one of these links in your browser:
 
     http://localhost:8501
+    or
+    http://127.0.0.1:8501
 
-4. ONCE YOU CAN SEE YOUR APP, EDIT DETAILS IN THE "data.py" FILE.
+   (Tip: If "localhost:8501" does not load, "127.0.0.1:8501" bypasses
+    Windows localhost IPv6 resolution issues.)
+
+
+4. EDIT YOUR PORTFOLIO:
+   Once the site is loaded, customize your content, skills, and theme
+   in the "data.py" file. Streamlit will update the page live as you save!
+
+
+-------------------------------------------------------------------------------
+TROUBLESHOOTING:
+-------------------------------------------------------------------------------
+
+- "streamlit is not recognized as an internal or external command":
+  Use: python -m streamlit run app.py
+
+- Port 8501 is already in use:
+  Streamlit might assign a new port (like http://localhost:8502). Check the
+  "Local URL" printed in your terminal, or force port 8501:
+  python -m streamlit run app.py --server.port 8501
+
+- Terminal pauses or hangs at startup:
+  Streamlit may be waiting for an email address. Click into the terminal
+  and press Enter to continue.
+
+- Cloud Deployment Note:
+  If you ever deploy your portfolio online (e.g. to Streamlit Community Cloud),
+  recreate a requirements.txt file with 'streamlit' inside it so the cloud
+  server knows what to install.
+-------------------------------------------------------------------------------
