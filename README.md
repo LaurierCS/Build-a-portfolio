@@ -4,7 +4,7 @@ This repo is a portfolio template built with React, Vite, and TypeScript. All of
 
 ## Using this template
 
-You need [Node.js](https://nodejs.org) (version 20.19 or newer) and [pnpm](https://pnpm.io). [SETUP.txt](SETUP.txt) walks through every step, including installing them.
+You need [Node.js](https://nodejs.org) (version 20.19 or newer) and [pnpm](https://pnpm.io). [SETUP.md](SETUP.md) walks through every step, including installing them.
 
 ```sh
 pnpm install   # one time, installs everything
