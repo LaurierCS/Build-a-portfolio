@@ -56,7 +56,7 @@ A second short paragraph is optional. Delete it if you do not need it.
 
 // Group your skills however makes sense. Each name becomes a badge.
 export const SKILLS: Record<string, string[]> = {
-  Technical: ['Python', 'Excel', 'Data analysis'],
+  Technical: ['JavaScript', 'Excel', 'Data analysis'],
   Professional: ['Public speaking', 'Project management', 'Research'],
   Languages: ['English', 'French'],
 }
@@ -107,7 +107,7 @@ export const PROJECTS: Project[] = [
     title: 'Project name',
     year: '2026',
     summary: 'One or two sentences: the problem, what you did, and the result.',
-    tags: ['Python', 'Research'],
+    tags: ['JavaScript', 'Research'],
     link: 'https://example.com',
   },
   {

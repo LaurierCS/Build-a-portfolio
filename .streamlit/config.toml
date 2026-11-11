@@ -1,8 +1,0 @@
-# YOUR LOOK: synced from THEME in data.py
-[theme]
-base = "light"
-primaryColor = "#E4572E"
-backgroundColor = "#FAFAFA"
-secondaryBackgroundColor = "#EDEDED"
-textColor = "#222222"
-font = "sans serif"
