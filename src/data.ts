@@ -1,250 +1,259 @@
 // ==============================================================
-//  BUILD A PORTFOLIO: a professional site, written in React
+//  BUILD A PORTFOLIO
+//  This is the only file you need to edit to make the site yours.
 //
 //  HOW IT WORKS
-//  - Edit this file, then click "Commit changes" on GitHub.
-//  - Your live site updates on its own within a minute or so.
-//  - Running it on your computer? Save the file and the page
-//    in your browser updates right away.
+//  - Change the text inside the quotes. Keep the quotes and commas.
+//  - Save the file. If the site is running (pnpm dev), the page in
+//    your browser updates right away.
+//  - On GitHub, click "Commit changes" and your live site updates
+//    on its own within a minute or so.
 //  - Anything after // is a note to you. The code ignores it.
 //
-//  Fill in Steps 1 to 6. Then use the FEATURE MENU below
-//  to add extras that make your site stand out.
+//  HIDING A SECTION
+//  Every list below can be emptied, like  export const TESTIMONIALS: Testimonial[] = []
+//  An empty section disappears from the page and from the menu.
 //
 //  PRIVACY: this site is public. Do not include your phone number,
 //  home address, or student number here or in your resume file.
 // ==============================================================
 
 import type {
-  BookAChat,
-  ChartData,
-  FeaturedProject,
-  Highlight,
+  About,
+  Certification,
+  Contact,
   Job,
   Project,
-  Recommendation,
   School,
+  Site,
+  SkillGroup,
+  SocialLink,
+  Testimonial,
   Theme,
-  WritingOrTalk,
-} from './types'
+  Writing,
+} from './types.ts'
 
 // --------------------------------------------------------------
-// STEP 1: THE BASICS
-// Change the words inside the quotes. Keep the quotes.
+// 1. THE BASICS
+// This fills in the top of the page (the "hero"), the browser
+// tab, and the preview card people see when you share your link.
 // --------------------------------------------------------------
-export const NAME = 'Your Name'
-export const HEADLINE = 'Your program | What you are aiming for' // e.g. "Economics student | Aspiring data analyst"
-export const LOCATION = 'City, Province or State'
-export const OPEN_TO = 'Open to: summer 2027 internships' // or "" to hide it
-export const PHOTO = 'photo.jpg' // a professional-looking headshot; put it in public/
-export const RESUME = 'resume.pdf' // your resume as a PDF with this exact name, in public/
-export const PAGE_ICON = '💼' // the little icon in the browser tab
-export const LAST_UPDATED = 'Month Year'
+export const SITE: Site = {
+  name: 'Your Name',
+  headline: 'Computer Science student & aspiring software developer', // what you do, in a few words
+  pitch:
+    'I build friendly, reliable web apps and love turning messy problems into simple tools. Currently looking for my next internship.', // 1 or 2 sentences
+  location: 'Waterloo, ON',
+  availability: 'Open to summer 2027 internships', // or "" to hide the badge
+  photo: 'photo.jpg', // a headshot in the public/ folder, or "" to hide it
+  resume: 'resume.pdf', // your resume as a PDF in public/ (powers the "Resume" button)
+  email: 'you@example.com', // used by the "Get in touch" and "Email me" buttons
 
-// --------------------------------------------------------------
-// STEP 2: ABOUT YOU
-// 3 to 4 sentences: who you are, what you study or do, what you
-// are aiming for, and one strength. Write it in your own voice.
-// Leave an empty line between paragraphs.
-// --------------------------------------------------------------
-export const ABOUT = `
-Write a short professional summary here. Say what you study, what you are
-good at, and the kind of work or opportunity you are looking for.
-
-A second short paragraph is optional. Delete it if you do not need it.
-`
-
-// Group your skills however makes sense. Each name becomes a badge.
-export const SKILLS: Record<string, string[]> = {
-  Technical: ['JavaScript', 'Excel', 'Data analysis'],
-  Professional: ['Public speaking', 'Project management', 'Research'],
-  Languages: ['English', 'French'],
+  // For search engines and link previews (LinkedIn, Slack, iMessage, ...)
+  url: '', // your live site address once it's online, e.g. "https://yourname.dev"
+  description: 'Portfolio of Your Name: projects, experience, and how to get in touch.',
+  socialImage: 'og-image.png', // a 1200 x 630 picture in public/ shown in link previews
+  favicon: '👋', // the little icon in the browser tab: an emoji, or a file in public/ like "favicon.png"
+  lastUpdated: 'November 2026',
 }
 
 // --------------------------------------------------------------
-// STEP 3: EXPERIENCE AND EDUCATION
-// Each {...} block is one entry. To add another, copy a whole
-// block (including the comma at the end) and paste it below.
+// 2. YOUR LOOK
+// Colours are hex codes. Pick one you like at https://coolors.co
+// --------------------------------------------------------------
+export const THEME: Theme = {
+  accent: '#E4572E', // buttons, links and highlights in light mode
+  accentDark: '#FF7A50', // the same colour, a bit brighter, for dark mode
+  mode: 'system', // "system" follows the visitor's device, or force "light" / "dark"
+  font: 'sans', // "sans", "serif", or "mono"
+}
+
+// --------------------------------------------------------------
+// 3. YOUR LINKS
+// Shown in the hero, the contact section, and the footer.
+// icon can be: "github", "linkedin", "x", "instagram", "youtube",
+// "bluesky", "mail", or "website". Only keep what you want public.
+// --------------------------------------------------------------
+export const SOCIALS: SocialLink[] = [
+  { label: 'GitHub', url: 'https://github.com/your-username', icon: 'github' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/your-name', icon: 'linkedin' },
+  { label: 'Email', url: 'mailto:you@example.com', icon: 'mail' },
+]
+
+// --------------------------------------------------------------
+// 4. ABOUT YOU
+// 2 or 3 short paragraphs in your own voice: who you are, what you
+// study or do, what you're aiming for, and one strength.
+// "facts" are quick details shown next to it. Use [] to hide them.
+// --------------------------------------------------------------
+export const ABOUT: About = {
+  paragraphs: [
+    "I'm a third-year Computer Science student who likes building things people actually use. Most of my projects start with a small annoyance in my own life and end with a tool my friends ask to borrow.",
+    "Outside of class I lead workshops for my school's computing club, and I've spent the last two summers working on internal tools and data dashboards. I'm happiest on teams that ship often and talk to their users.",
+  ],
+  facts: [
+    { label: 'Based in', value: 'Waterloo, ON' },
+    { label: 'Studying', value: 'BSc Computer Science' },
+    { label: 'Focus', value: 'Web apps & data' },
+    { label: 'Fun fact', value: 'Solves a Rubik’s cube in under 20 s' },
+  ],
+}
+
+// --------------------------------------------------------------
+// 5. SKILLS
+// Group them however makes sense. Each skill becomes a small tag.
+// --------------------------------------------------------------
+export const SKILLS: SkillGroup[] = [
+  { group: 'Languages', skills: ['TypeScript', 'JavaScript', 'Java', 'SQL', 'HTML & CSS'] },
+  { group: 'Frameworks & tools', skills: ['React', 'Node.js', 'Vite', 'Git', 'PostgreSQL', 'Figma'] },
+  { group: 'Professional', skills: ['Public speaking', 'Project management', 'Technical writing', 'Mentoring'] },
+]
+
+// --------------------------------------------------------------
+// 6. EXPERIENCE
+// Newest first. Each {...} block is one entry. To add another, copy
+// a whole block (including the comma after it) and paste it below.
 //
 // Write each point like this:  action verb + what you did + result.
 // Example: "Organized a 40-person workshop, with 90% positive feedback"
 // Include jobs, internships, volunteering, and leadership roles.
+// "link" and "tech" are optional. Delete those lines if you don't need them.
 // --------------------------------------------------------------
 export const EXPERIENCE: Job[] = [
   {
-    role: 'Your role',
-    organization: 'Organization name',
-    dates: 'May 2025 to Aug 2025',
+    role: 'Software Developer Intern',
+    organization: 'Company Name',
+    link: 'https://example.com',
+    location: 'Toronto, ON (hybrid)',
+    dates: 'May 2026 to Aug 2026',
     points: [
-      'Started with an action verb and described what you did',
-      'Added a result or number if you have one',
+      'Built a React dashboard that cut weekly reporting time from 3 hours to 20 minutes',
+      'Wrote API tests that caught 12 bugs before release',
+    ],
+    tech: ['React', 'TypeScript', 'Node.js'],
+  },
+  {
+    role: 'Workshop Lead',
+    organization: 'Your School Computing Club',
+    location: 'Waterloo, ON',
+    dates: 'Sep 2025 to Present',
+    points: [
+      'Planned and taught 8 beginner web development workshops for 40+ students each',
+      'Grew club membership by 35% in one term',
     ],
   },
   {
-    role: 'Another role',
-    organization: 'Another organization',
-    dates: 'Sep 2024 to Apr 2025',
-    points: ['Delete any entries you do not need'],
-  },
-]
-
-export const EDUCATION: School[] = [
-  {
-    school: 'Your University',
-    degree: 'Bachelor of Arts in Your Major',
-    dates: '2024 to 2028',
+    role: 'Data Analyst Intern',
+    organization: 'Another Organization',
+    location: 'Remote',
+    dates: 'May 2025 to Aug 2025',
+    points: ['Cleaned and analysed survey data from 2,000 customers and presented findings to the leadership team'],
+    tech: ['SQL', 'Excel'],
   },
 ]
 
 // --------------------------------------------------------------
-// STEP 4: PROJECTS
-// Show your best 2 to 4. For each, say the problem, what you did,
-// and the outcome. "tags" are badges for tools or topics.
-// Leave "link" as "" if there is nothing to link to.
+// 7. PROJECTS
+// Show your best 3 to 6. For each, say the problem, what you did,
+// and the outcome. "tags" are the tools or topics you used.
+// - image:    a picture in public/ (a 16:9 screenshot works best). Leave it
+//             out and a coloured banner with the title is shown instead.
+// - live:     a link to try it. source: a link to the code. Both optional.
+// - featured: true puts it first, in a bigger card. Use it for 1 or 2.
 // --------------------------------------------------------------
 export const PROJECTS: Project[] = [
   {
-    title: 'Project name',
+    title: 'Study Buddy',
     year: '2026',
-    summary: 'One or two sentences: the problem, what you did, and the result.',
-    tags: ['JavaScript', 'Research'],
-    link: 'https://example.com',
+    description:
+      'A study planner that turns a course outline into a week-by-week schedule. Used by 300+ students during exam season.',
+    image: 'project.png',
+    tags: ['React', 'TypeScript', 'Supabase'],
+    live: 'https://example.com',
+    source: 'https://github.com/your-username/study-buddy',
+    featured: true,
   },
   {
-    title: 'Another project',
+    title: 'Campus Eats Map',
     year: '2025',
-    summary: 'Delete any blocks you do not need.',
-    tags: ['Teamwork'],
-    link: '',
+    description: 'An interactive map of cheap food near campus, with filters for price, hours and dietary needs.',
+    tags: ['JavaScript', 'Leaflet', 'Open data'],
+    live: 'https://example.com',
+    source: 'https://github.com/your-username/campus-eats',
+  },
+  {
+    title: 'Budget Bot',
+    year: '2025',
+    description: 'A chat bot that sorts your bank transactions into categories and sends a weekly spending summary.',
+    tags: ['Node.js', 'SQL'],
+    source: 'https://github.com/your-username/budget-bot',
+  },
+  {
+    title: 'Research Poster: Transit Delays',
+    year: '2024',
+    description: 'Analysed a year of city bus data to find which routes are late most often, and why.',
+    tags: ['Data analysis', 'Research'],
   },
 ]
 
 // --------------------------------------------------------------
-// STEP 5: CONTACT
-// Format is Label: "link". Only keep what you want public.
-// (Labels with spaces need quotes, like "Book a call": "...")
+// 8. EDUCATION
+// "details" is optional: GPA, awards, or relevant courses.
 // --------------------------------------------------------------
-export const LINKS: Record<string, string> = {
-  Email: 'mailto:you@example.com',
-  LinkedIn: 'https://www.linkedin.com/in/your-name',
-  GitHub: 'https://github.com/your-username',
-}
+export const EDUCATION: School[] = [
+  {
+    school: 'Your University',
+    degree: 'Bachelor of Science in Computer Science',
+    location: 'Waterloo, ON',
+    dates: '2024 to 2028',
+    details: ["Dean's List, 2025", 'Courses: Data Structures, Databases, Human-Computer Interaction'],
+  },
+]
 
 // --------------------------------------------------------------
-// STEP 6: YOUR LOOK & THEME
-// Change the colours and font. Keep the quotes.
-// Colours can be hex codes like "#E4572E".
+// 9. EXTRAS (OPTIONAL)
+// Nice to have, but not required. Use [] to hide any of them.
 // --------------------------------------------------------------
-export const THEME: Theme = {
-  base: 'light', // or "dark"
-  primaryColor: '#E4572E', // buttons and highlights
-  backgroundColor: '#FAFAFA', // page background
-  secondaryBackgroundColor: '#EDEDED', // boxes and tabs
-  textColor: '#222222', // main text
-  font: 'sans serif', // try "serif" or "monospace"
-}
 
-// ==============================================================
-//  FEATURE MENU (OPTIONAL EXTRAS)
-//
-//  These extra sections appear under your tabs.
-//  They are pure data (lists or objects) and are kept empty
-//  by default so they do not show up until you add data to them.
-//  To turn one ON:
-//    - Fill it in using the examples below.
-//  To turn one OFF:
-//    - Leave it empty: [] for lists, "" for text, null for the rest.
-// ==============================================================
+// Certifications and awards. "link" is optional.
+export const CERTIFICATIONS: Certification[] = [
+  { name: 'AWS Certified Cloud Practitioner', issuer: 'Amazon Web Services', year: '2026', link: 'https://example.com' },
+  { name: 'Hackathon Winner, Best Use of Data', issuer: 'Your City Hacks', year: '2025' },
+]
 
-// ---- Feature A: key highlights -------------------------------
-// Add 2 to 4 key numbers or metrics to show right under your tabs.
-// Example:
-// export const HIGHLIGHTS: Highlight[] = [
-//   { label: 'GPA', value: '3.8' },
-//   { label: 'Internships', value: '2' },
-//   { label: 'Projects shipped', value: '5' },
-// ]
-
-export const HIGHLIGHTS: Highlight[] = []
-
-// ---- Feature B: certifications and awards --------------------
-// List any honors, dean's list recognitions, or certificates.
-// Example:
-// export const CERTIFICATIONS: string[] = [
-//   "Dean's List, 2025",
-//   'Name of a certificate, 2026',
-// ]
-
-export const CERTIFICATIONS: string[] = []
-
-// ---- Feature C: recommendations ------------------------------
 // Quotes from professors, managers, or teammates.
 // Always ask permission before quoting someone.
-// Example:
-// export const RECOMMENDATIONS: Recommendation[] = [
-//   {
-//     quote: 'A short quote from a professor, manager, or teammate.',
-//     author: 'Name, Title',
-//   },
-// ]
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote: 'Your Name picked up our codebase in a week and shipped features our users still talk about.',
+    name: 'Manager Name',
+    role: 'Engineering Manager, Company Name',
+  },
+  {
+    quote: 'One of the clearest communicators in my class. Their final project was a highlight of the term.',
+    name: 'Professor Name',
+    role: 'Professor, Your University',
+  },
+]
 
-export const RECOMMENDATIONS: Recommendation[] = []
+// Articles, talks, research posters, podcasts, or videos. "link" is optional.
+export const WRITING: Writing[] = [
+  {
+    title: 'What I learned shipping my first app to real users',
+    type: 'Article',
+    venue: 'Personal blog',
+    date: 'Mar 2026',
+    link: 'https://example.com',
+  },
+  { title: 'Intro to React for absolute beginners', type: 'Talk', venue: 'Computing Club workshop', date: 'Oct 2025' },
+]
 
-// ---- Feature D: writing and talks ----------------------------
-// Articles, presentations, research posters, or blog posts.
-// Example:
-// export const WRITING_AND_TALKS: WritingOrTalk[] = [
-//   {
-//     title: 'Title of an article, presentation, or poster',
-//     link: 'https://example.com',
-//   },
-// ]
-
-export const WRITING_AND_TALKS: WritingOrTalk[] = []
-
-// ---- Feature E: a featured project with a picture ------------
-// Highlight your best project with an image and link.
-// Put the image in public/ first (e.g. project.png).
-// Example:
-// export const FEATURED_PROJECT: FeaturedProject | null = {
-//   title: 'Featured project',
-//   image: 'project.png',
-//   caption: 'A screenshot or photo of your work',
-//   description: 'Two sentences: the problem, what you did, and the result.',
-//   link: 'https://example.com',
-// }
-
-export const FEATURED_PROJECT: FeaturedProject | null = null
-
-// ---- Feature F: a chart from your own work -------------------
-// Show a simple data chart from a project or experiment.
-// Example:
-// export const CHART_DATA: ChartData | null = {
-//   title: 'A result I am proud of',
-//   x_axis: 'Month',
-//   y_axis: 'Result',
-//   data: [
-//     { Month: 'Jan', Result: 10 },
-//     { Month: 'Feb', Result: 25 },
-//     { Month: 'Mar', Result: 40 },
-//   ],
-// }
-
-export const CHART_DATA: ChartData | null = null
-
-// ---- Feature G: a personal side ------------------------------
-// Hobbies, sports, volunteering, or what you do outside of work.
-// Example:
-// export const PERSONAL_SIDE = 'A few lines about hobbies, volunteering, or what you do for fun.'
-
-export const PERSONAL_SIDE = ''
-
-// ---- Feature H: a "book a chat" button -----------------------
-// A button linking to Calendly or another scheduling tool.
-// Example:
-// export const BOOK_A_CHAT: BookAChat | null = {
-//   label: 'Book a 15-minute chat',
-//   link: 'https://calendly.com/your-link',
-// }
-
-export const BOOK_A_CHAT: BookAChat | null = null
+// --------------------------------------------------------------
+// 10. CONTACT
+// The last section. The big button emails SITE.email.
+// --------------------------------------------------------------
+export const CONTACT: Contact = {
+  heading: "Let's work together",
+  message:
+    "I'm looking for internships and new-grad roles in software development. The best way to reach me is by email, and I usually reply within a day.",
+}
