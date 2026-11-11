@@ -1,43 +1,76 @@
-import type { Theme } from '../types'
-import { asset } from './assets'
+import { useCallback, useEffect, useState } from 'react'
+import type { Theme } from '../types.ts'
 
-const FONTS: Record<string, string> = {
-  'sans serif':
-    'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-  serif: 'Georgia, Cambria, "Times New Roman", Times, serif',
-  monospace: 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace',
+export type ColorMode = 'light' | 'dark'
+
+/** Where the visitor's light/dark choice is saved in their browser. */
+export const STORAGE_KEY = 'portfolio-theme'
+
+const FONTS: Record<Theme['font'], string> = {
+  sans: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  serif: 'Charter, "Bitstream Charter", "Iowan Old Style", Georgia, Cambria, serif',
+  mono: 'ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace',
 }
 
-/** Applies THEME from data.ts to the page as CSS variables (see index.css). */
+/** Puts the accent colours and font from data.ts onto the page as CSS variables (see index.css). */
 export function applyTheme(theme: Theme) {
-  const root = document.documentElement
-  root.dataset.base = theme.base
-  root.style.colorScheme = theme.base
-  root.style.setProperty('--primary', theme.primaryColor)
-  root.style.setProperty('--bg', theme.backgroundColor)
-  root.style.setProperty('--bg-secondary', theme.secondaryBackgroundColor)
-  root.style.setProperty('--text', theme.textColor)
-  root.style.setProperty('--font', FONTS[theme.font] ?? theme.font)
+  const root = document.documentElement.style
+  root.setProperty('--accent-light', theme.accent)
+  root.setProperty('--accent-dark', theme.accentDark || theme.accent)
+  root.setProperty('--font', FONTS[theme.font] ?? FONTS.sans)
 }
 
-/** Sets the browser tab title and icon. The icon can be an emoji or a file in public/. */
-export function setPageInfo(title: string, icon: string) {
-  document.title = title
+function systemMode(): ColorMode {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
 
-  let href = ''
-  if (/\.(png|jpe?g|gif|svg|ico|webp)$/i.test(icon)) {
-    href = asset(icon)
-  } else if (icon) {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${icon}</text></svg>`
-    href = `data:image/svg+xml,${encodeURIComponent(svg)}`
+function savedMode(): ColorMode | null {
+  try {
+    const value = localStorage.getItem(STORAGE_KEY)
+    return value === 'light' || value === 'dark' ? value : null
+  } catch {
+    return null
   }
-  if (!href) return
+}
 
-  let link = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
-  if (!link) {
-    link = document.createElement('link')
-    link.rel = 'icon'
-    document.head.appendChild(link)
-  }
-  link.href = href
+/**
+ * Light/dark mode. Starts from the visitor's saved choice, then THEME.mode,
+ * then their device setting. A small script in index.html applies it before
+ * the page paints, so there's no flash of the wrong colours.
+ */
+export function useColorMode(defaultMode: Theme['mode']) {
+  const [mode, setMode] = useState<ColorMode>(() => {
+    const current = document.documentElement.dataset.theme
+    if (current === 'light' || current === 'dark') return current
+    return savedMode() ?? (defaultMode === 'system' ? systemMode() : defaultMode)
+  })
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = mode
+  }, [mode])
+
+  // Follow the device setting until the visitor picks one themselves.
+  useEffect(() => {
+    if (defaultMode !== 'system') return
+    const media = window.matchMedia('(prefers-color-scheme: dark)')
+    const onChange = () => {
+      if (!savedMode()) setMode(media.matches ? 'dark' : 'light')
+    }
+    media.addEventListener('change', onChange)
+    return () => media.removeEventListener('change', onChange)
+  }, [defaultMode])
+
+  const toggle = useCallback(() => {
+    setMode((m) => {
+      const next = m === 'dark' ? 'light' : 'dark'
+      try {
+        localStorage.setItem(STORAGE_KEY, next)
+      } catch {
+        // Private browsing can block storage. The toggle still works for this visit.
+      }
+      return next
+    })
+  }, [])
+
+  return { mode, toggle }
 }

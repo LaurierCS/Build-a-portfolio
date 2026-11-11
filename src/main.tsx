@@ -2,12 +2,11 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import { NAME, PAGE_ICON, THEME } from './data'
-import { applyTheme, setPageInfo } from './lib/theme'
+import { THEME } from './data.ts'
+import { applyTheme } from './lib/theme.ts'
 
-// Your colours, font, tab title and tab icon all come from data.ts
+// Your accent colours and font come from THEME in data.ts
 applyTheme(THEME)
-setPageInfo(`${NAME} | Portfolio`, PAGE_ICON)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

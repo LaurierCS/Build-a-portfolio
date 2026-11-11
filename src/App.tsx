@@ -1,298 +1,81 @@
 // ==============================================================
-//  BUILD A PORTFOLIO: a professional site, written in React
+//  This file puts the page together from the sections in
+//  src/sections/. Your content lives in src/data.ts, so you can
+//  build your whole site without touching this file.
 //
-//  This file builds your portfolio page from the information in
-//  data.ts. You can fill in your whole site without touching it.
+//  To REORDER sections, move lines in the SECTIONS list below.
+//  To ADD a section, make a new file in src/sections/ (copy one
+//  like Skills.tsx), then add it to the list.
 // ==============================================================
 
-import { useState } from 'react'
-import * as data from './data'
-import { LineChart } from './components/LineChart'
-import { Tabs } from './components/Tabs'
-import { Badges, Caption, Card, LinkButton, Metric, Paragraphs } from './components/ui'
-import { asset, useFileExists } from './lib/assets'
-
-const {
-  NAME,
-  HEADLINE,
-  LOCATION,
-  OPEN_TO,
-  PHOTO,
-  RESUME,
-  LAST_UPDATED,
+import type { ComponentType } from 'react'
+import {
   ABOUT,
-  SKILLS,
-  EXPERIENCE,
-  EDUCATION,
-  PROJECTS,
-  LINKS,
-  HIGHLIGHTS,
   CERTIFICATIONS,
-  RECOMMENDATIONS,
-  WRITING_AND_TALKS,
-  FEATURED_PROJECT,
-  CHART_DATA,
-  PERSONAL_SIDE,
-  BOOK_A_CHAT,
-} = data
+  EDUCATION,
+  EXPERIENCE,
+  PROJECTS,
+  SITE,
+  SKILLS,
+  TESTIMONIALS,
+  THEME,
+  WRITING,
+} from './data.ts'
+import { Nav } from './components/Nav.tsx'
+import { useColorMode } from './lib/theme.ts'
+import { useScrollReveal } from './lib/scroll.ts'
+import { About } from './sections/About.tsx'
+import { Certifications } from './sections/Certifications.tsx'
+import { Contact } from './sections/Contact.tsx'
+import { Education } from './sections/Education.tsx'
+import { Experience } from './sections/Experience.tsx'
+import { Footer } from './sections/Footer.tsx'
+import { Hero } from './sections/Hero.tsx'
+import { Projects } from './sections/Projects.tsx'
+import { Skills } from './sections/Skills.tsx'
+import { Testimonials } from './sections/Testimonials.tsx'
+import { Writing } from './sections/Writing.tsx'
 
-// ==============================================================
-//  BELOW THIS LINE BUILDS THE PAGE.
-//  Leave it alone until Steps 1 to 6 in data.ts look right.
-// ==============================================================
+type SectionEntry = {
+  id: string // must match the id the section uses, so the menu can jump to it
+  label: string // the name in the menu
+  show: boolean // empty sections are hidden from the page and the menu
+  inMenu: boolean // true to list it in the top menu (it's on the page either way)
+  Component: ComponentType
+}
+
+const SECTIONS: SectionEntry[] = [
+  { id: 'about', label: 'About', show: ABOUT.paragraphs.length > 0, inMenu: true, Component: About },
+  { id: 'skills', label: 'Skills', show: SKILLS.length > 0, inMenu: false, Component: Skills },
+  { id: 'experience', label: 'Experience', show: EXPERIENCE.length > 0, inMenu: true, Component: Experience },
+  { id: 'projects', label: 'Projects', show: PROJECTS.length > 0, inMenu: true, Component: Projects },
+  { id: 'education', label: 'Education', show: EDUCATION.length > 0, inMenu: true, Component: Education },
+  { id: 'awards', label: 'Awards', show: CERTIFICATIONS.length > 0, inMenu: false, Component: Certifications },
+  { id: 'testimonials', label: 'Testimonials', show: TESTIMONIALS.length > 0, inMenu: false, Component: Testimonials },
+  { id: 'writing', label: 'Writing', show: WRITING.length > 0, inMenu: false, Component: Writing },
+  { id: 'contact', label: 'Contact', show: true, inMenu: true, Component: Contact },
+]
 
 export default function App() {
-  return (
-    <main className="page">
-      <Header />
+  const { mode, toggle } = useColorMode(THEME.mode)
+  useScrollReveal()
 
-      {/* The tabs. To ADD A NEW TAB:
-            1. add a new { label, content } block to this list, e.g. "Writing"
-            2. put what the tab should show in "content" (JSX, like the others) */}
-      <Tabs
-        tabs={[
-          { label: 'About', content: <AboutTab /> },
-          { label: 'Experience', content: <ExperienceTab /> },
-          { label: 'Projects', content: <ProjectsTab /> },
-          { label: 'Contact', content: <ContactTab /> },
-        ]}
-      />
+  const visible = SECTIONS.filter((s) => s.show)
+  const menu = visible.filter((s) => s.inMenu).map(({ id, label }) => ({ id, label }))
 
-      <FeatureMenu />
-
-      {/* ==============================================================
-          KEEP THIS LAST: the footer
-          ============================================================== */}
-      <hr />
-      <Caption>Built with React and Vite. Last updated {LAST_UPDATED}.</Caption>
-    </main>
-  )
-}
-
-// Header: photo on the left, details on the right
-function Header() {
-  const [photoOk, setPhotoOk] = useState(true)
-  // The download button only appears if you have added resume.pdf to public/
-  const resumeUrl = asset(RESUME)
-  const hasResume = useFileExists(resumeUrl)
-  const details = [LOCATION, OPEN_TO].filter(Boolean)
-
-  return (
-    <header className="columns header">
-      <div className="col" style={{ flex: 1 }}>
-        {PHOTO && photoOk && (
-          <img className="photo" src={asset(PHOTO)} alt={NAME} onError={() => setPhotoOk(false)} />
-        )}
-      </div>
-      <div className="col" style={{ flex: 3 }}>
-        <h1>{NAME}</h1>
-        {HEADLINE && <h3>{HEADLINE}</h3>}
-        {details.length > 0 && <Caption>{details.join('  |  ')}</Caption>}
-        {hasResume && (
-          <div>
-            <LinkButton href={resumeUrl} download={RESUME.split('/').pop()}>
-              Download resume
-            </LinkButton>
-          </div>
-        )}
-      </div>
-    </header>
-  )
-}
-
-function AboutTab() {
   return (
     <>
-      <Paragraphs text={ABOUT} />
-      <h3>Skills</h3>
-      {Object.entries(SKILLS).map(([category, items]) => (
-        <div key={category}>
-          <p>
-            <strong>{category}</strong>
-          </p>
-          <Badges items={items} color="blue" />
-        </div>
-      ))}
-    </>
-  )
-}
-
-function ExperienceTab() {
-  return (
-    <>
-      <h3>Experience</h3>
-      {EXPERIENCE.map((job) => (
-        <div key={`${job.role}-${job.organization}-${job.dates}`}>
-          <p>
-            <strong>{job.role}</strong>, {job.organization}
-          </p>
-          <Caption>{job.dates}</Caption>
-          <ul>
-            {job.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-          <hr />
-        </div>
-      ))}
-      <h3>Education</h3>
-      {EDUCATION.map((school) => (
-        <div key={`${school.school}-${school.dates}`}>
-          <p>
-            <strong>{school.school}</strong>
-          </p>
-          <p>{school.degree}</p>
-          <Caption>{school.dates}</Caption>
-        </div>
-      ))}
-    </>
-  )
-}
-
-function ProjectsTab() {
-  return (
-    <>
-      {PROJECTS.map((project) => (
-        <Card key={`${project.title}-${project.year}`}>
-          <h3>
-            {project.title} ({project.year})
-          </h3>
-          <Badges items={project.tags} color="gray" />
-          <p>{project.summary}</p>
-          {project.link && (
-            <div>
-              <LinkButton href={project.link}>View project</LinkButton>
-            </div>
-          )}
-        </Card>
-      ))}
-    </>
-  )
-}
-
-function ContactTab() {
-  return (
-    <>
-      <p>The best way to reach me is by email or LinkedIn.</p>
-      <div className="columns">
-        {Object.entries(LINKS).map(([label, url]) => (
-          <div className="col" key={label}>
-            <LinkButton href={url}>{label}</LinkButton>
-          </div>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <Nav name={SITE.name} items={menu} mode={mode} onToggleMode={toggle} />
+      <main id="main" tabIndex={-1}>
+        <Hero />
+        {visible.map(({ id, Component }) => (
+          <Component key={id} />
         ))}
-      </div>
-    </>
-  )
-}
-
-// ==============================================================
-//  FEATURE MENU (OPTIONAL EXTRAS)
-//  Each extra only shows up once you fill it in, in data.ts.
-//  Want something custom? Add your own JSX at the end of this
-//  function, and it will show up above the footer.
-// ==============================================================
-function FeatureMenu() {
-  return (
-    <>
-      {/* ---- Feature A: key highlights ---- */}
-      {HIGHLIGHTS.length > 0 && (
-        <div className="columns">
-          {HIGHLIGHTS.map((item) => (
-            <div className="col" key={item.label}>
-              <Metric label={item.label} value={item.value} />
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* ---- Feature B: certifications and awards ---- */}
-      {CERTIFICATIONS.length > 0 && (
-        <section>
-          <h3>Certifications and awards</h3>
-          <ul>
-            {CERTIFICATIONS.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* ---- Feature C: recommendations ---- */}
-      {RECOMMENDATIONS.length > 0 && (
-        <section>
-          <h3>What people say</h3>
-          {RECOMMENDATIONS.map((rec) => (
-            <Card key={rec.quote}>
-              <p>{rec.quote}</p>
-              {rec.author && <Caption>{rec.author}</Caption>}
-            </Card>
-          ))}
-        </section>
-      )}
-
-      {/* ---- Feature D: writing and talks ---- */}
-      {WRITING_AND_TALKS.length > 0 && (
-        <section>
-          <h3>Writing and talks</h3>
-          <ul>
-            {WRITING_AND_TALKS.map((item) => (
-              <li key={item.title}>
-                {item.link ? (
-                  <a href={item.link} target="_blank" rel="noopener noreferrer">
-                    {item.title}
-                  </a>
-                ) : (
-                  item.title
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* ---- Feature E: a featured project with a picture ---- */}
-      {FEATURED_PROJECT && (
-        <section>
-          <h3>{FEATURED_PROJECT.title || 'Featured project'}</h3>
-          {FEATURED_PROJECT.image && (
-            <figure className="figure">
-              <img src={asset(FEATURED_PROJECT.image)} alt={FEATURED_PROJECT.caption || FEATURED_PROJECT.title || ''} />
-              {FEATURED_PROJECT.caption && <figcaption className="caption">{FEATURED_PROJECT.caption}</figcaption>}
-            </figure>
-          )}
-          {FEATURED_PROJECT.description && <p>{FEATURED_PROJECT.description}</p>}
-          {FEATURED_PROJECT.link && (
-            <div>
-              <LinkButton href={FEATURED_PROJECT.link}>See the full project</LinkButton>
-            </div>
-          )}
-        </section>
-      )}
-
-      {/* ---- Feature F: a chart from your own work ---- */}
-      {CHART_DATA && CHART_DATA.data.length > 0 && (
-        <section>
-          {CHART_DATA.title && <h3>{CHART_DATA.title}</h3>}
-          <LineChart chart={CHART_DATA} />
-        </section>
-      )}
-
-      {/* ---- Feature G: a personal side ---- */}
-      {PERSONAL_SIDE && (
-        <details className="expander">
-          <summary>Beyond work</summary>
-          <div className="expander-body">
-            <Paragraphs text={PERSONAL_SIDE} />
-          </div>
-        </details>
-      )}
-
-      {/* ---- Feature H: a "book a chat" button ---- */}
-      {BOOK_A_CHAT?.link && (
-        <div>
-          <LinkButton href={BOOK_A_CHAT.link}>{BOOK_A_CHAT.label || 'Book a 15-minute chat'}</LinkButton>
-        </div>
-      )}
+      </main>
+      <Footer />
     </>
   )
 }
