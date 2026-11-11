@@ -1,27 +1,60 @@
 # Build a Portfolio
 
-The Streamlit app in `src/` of this repo lets you build a portfolio site in plain Python with Streamlit. If you'd rather build one the way most web developers do, this page covers the usual tools so you can choose what fits you.
+This repo is a portfolio template built with React, Vite, and TypeScript. All of your content lives in one file, `src/data.ts`, so you can fill in your whole site without touching the rest of the code. When you're ready to change more, the rest of this page covers the usual tools so you can choose what fits you.
 
-None of it is required. Pick one option from each section and start building.
+## Using this template
+
+You need [Node.js](https://nodejs.org) (version 20.19 or newer) and [pnpm](https://pnpm.io). [SETUP.txt](SETUP.txt) walks through every step, including installing them.
+
+```sh
+pnpm install   # one time, installs everything
+pnpm dev       # runs your site at http://localhost:5173
+```
+
+Then open `src/data.ts` and follow Steps 1 to 6. The page in your browser updates every time you save.
+
+| Command | What it does |
+|---|---|
+| `pnpm dev` | Runs your site on your computer and updates it as you save |
+| `pnpm build` | Checks your code for mistakes and builds the finished site into `dist/` |
+| `pnpm preview` | Shows the finished `dist/` build, so you can check it before deploying |
+| `pnpm lint` | Looks for common mistakes in the code |
+
+### Where things live
+
+```text
+public/              your files: photo.jpg, resume.pdf, project.png
+src/data.ts          your content, links, and colours (start here)
+src/App.tsx          builds the page from data.ts (tabs, sections, extras)
+src/components/      small pieces like tabs, badges, buttons, and the chart
+src/index.css        the styles (colours and font come from THEME in data.ts)
+```
+
+The site has your photo and details at the top, then tabs for About, Experience, Projects, and Contact. Under the tabs is a feature menu of optional extras (highlights, awards, recommendations, writing and talks, a featured project, a chart, a "Beyond work" section, and a "book a chat" button). Each extra stays hidden until you fill it in.
+
+To add a tab, add a new `{ label, content }` block to the list of tabs in `src/App.tsx`.
 
 ## Picking a stack
 
+Already know you want to build it your own way? Here's how people usually choose.
+
 ```mermaid
 flowchart TD
-    A[Starting a portfolio] --> B{Want to write web code?}
-    B -- No --> S[Use the Streamlit template in this repo]
+    A[Starting a portfolio] --> B{Want to write most of the code yourself?}
+    B -- No --> S[Use the React template in this repo and edit data.ts]
     B -- Yes --> C{Mostly content, or lots of interactivity?}
     C -- Mostly content --> D[Astro]
     C -- Lots of interactivity --> E{Know React already?}
     E -- Yes --> F[React + Vite, or Next.js]
     E -- No --> G[Vue or Svelte + Vite]
+    S --> I
     D --> H[Add Tailwind for styling]
     F --> H
     G --> H
     H --> I[Deploy free on GitHub Pages, Vercel, Netlify, or Cloudflare Pages]
 ```
 
-If you can't decide, **Astro + TypeScript + Tailwind** works well for most portfolios.
+If you can't decide, **Astro + TypeScript + Tailwind** works well for most portfolios. This template uses plain CSS so there's less to learn up front, but you can add Tailwind later.
 
 ## TypeScript or JavaScript
 
@@ -74,7 +107,7 @@ Both do the same job as React. Many people find them easier to pick up because a
 
 People mix these up because they all show up next to React. They do different jobs.
 
-- **[Vite](https://vite.dev)** is a build tool. It runs your local dev server and bundles your code for production. It works with React, Vue, Svelte, or plain JavaScript. Start a project with `npm create vite@latest`.
+- **[Vite](https://vite.dev)** is a build tool. It runs your local dev server and bundles your code for production. It works with React, Vue, Svelte, or plain JavaScript. Start a project with `pnpm create vite` (or `npm create vite@latest`). This template is built with it.
 - **[Next.js](https://nextjs.org)** is a full framework built on React. It adds file-based routing (a file in a folder becomes a page), server rendering, and API routes. It's a lot for a simple portfolio, but worth knowing.
 - **[Nuxt](https://nuxt.com)** fills the same role for Vue that Next.js fills for React.
 - **[Astro](https://astro.build)** uses Vite under the hood, so you get the fast dev server too.
@@ -116,7 +149,7 @@ Brand logos still belong to their companies. Using them to show which tools you'
 
 ## Free hosting
 
-All of these can deploy straight from your GitHub repo, and every push updates the site.
+All of these can deploy straight from your GitHub repo, and every push updates the site. This template builds to plain static files, so any of them works.
 
 | Host | Good for | Notes |
 |---|---|---|
@@ -125,11 +158,57 @@ All of these can deploy straight from your GitHub repo, and every push updates t
 | [Netlify](https://www.netlify.com) | Any static site | Easy forms and redirects |
 | [Cloudflare Pages](https://pages.cloudflare.com) | Any static site | Fast and generous free tier |
 
+### Deploying this template
+
+Push your copy of this repo to GitHub first. For every host, the build command is `pnpm build` and the folder to publish is `dist`.
+
+- **Vercel:** click "Add New Project", import your repo, and press Deploy. It spots Vite and pnpm on its own.
+- **Netlify:** click "Add new site", then "Import an existing project", and pick your repo. Set the build command to `pnpm build` and the publish directory to `dist`.
+- **Cloudflare Pages:** go to Workers & Pages, create a Pages project from Git, pick your repo, choose the "React (Vite)" preset (or set `pnpm build` and `dist` yourself), and deploy.
+- **GitHub Pages:** in your repo go to Settings, then Pages, and set Source to "GitHub Actions". Then add this file as `.github/workflows/deploy.yml` and push:
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+Your site will be at `https://your-username.github.io/your-repo-name/`. It works from a sub-folder like that because `vite.config.ts` sets `base: './'`.
+
 ## Starter combos
 
 | If you want... | Try |
 |---|---|
-| The fastest path with no web code | The Streamlit template in this repo |
+| The fastest path, just fill in your details | The React template in this repo |
 | A fast, simple portfolio | Astro + TypeScript + Tailwind |
 | To practise what jobs ask for | React + Vite + TypeScript + Tailwind |
 | A full framework to learn | Next.js + Tailwind + shadcn/ui |
