@@ -24,7 +24,6 @@ import type {
   Contact,
   Job,
   Project,
-  School,
   Site,
   SkillGroup,
   SocialLink,
@@ -54,7 +53,6 @@ export const SITE: Site = {
   description: 'Portfolio of Your Name: projects, experience, and how to get in touch.',
   socialImage: 'og-image.png', // a 1200 x 630 picture in public/ shown in link previews
   favicon: '👋', // the little icon in the browser tab: an emoji, or a file in public/ like "favicon.png"
-  lastUpdated: 'November 2026',
 }
 
 // --------------------------------------------------------------
@@ -70,7 +68,7 @@ export const THEME: Theme = {
 
 // --------------------------------------------------------------
 // 3. YOUR LINKS
-// Shown in the hero, the contact section, and the footer.
+// Shown in the hero and the contact section.
 // icon can be: "github", "linkedin", "x", "instagram", "youtube",
 // "bluesky", "mail", or "website". Only keep what you want public.
 // --------------------------------------------------------------
@@ -81,10 +79,13 @@ export const SOCIALS: SocialLink[] = [
 ]
 
 // --------------------------------------------------------------
-// 4. ABOUT YOU
+// 4. ABOUT YOU (AND YOUR EDUCATION)
 // 2 or 3 short paragraphs in your own voice: who you are, what you
 // study or do, what you're aiming for, and one strength.
 // "facts" are quick details shown next to it. Use [] to hide them.
+// "education" shows under your paragraphs, one {...} block per school.
+//   "details" is optional: GPA, awards, or relevant courses.
+//   Use [] to hide it.
 // --------------------------------------------------------------
 export const ABOUT: About = {
   paragraphs: [
@@ -96,6 +97,15 @@ export const ABOUT: About = {
     { label: 'Studying', value: 'BSc Computer Science' },
     { label: 'Focus', value: 'Web apps & data' },
     { label: 'Fun fact', value: 'Solves a Rubik’s cube in under 20 s' },
+  ],
+  education: [
+    {
+      school: 'Your University',
+      degree: 'Bachelor of Science in Computer Science',
+      location: 'Waterloo, ON',
+      dates: '2024 to 2028',
+      details: ["Dean's List, 2025", 'Courses: Data Structures, Databases, Human-Computer Interaction'],
+    },
   ],
 }
 
@@ -197,21 +207,7 @@ export const PROJECTS: Project[] = [
 ]
 
 // --------------------------------------------------------------
-// 8. EDUCATION
-// "details" is optional: GPA, awards, or relevant courses.
-// --------------------------------------------------------------
-export const EDUCATION: School[] = [
-  {
-    school: 'Your University',
-    degree: 'Bachelor of Science in Computer Science',
-    location: 'Waterloo, ON',
-    dates: '2024 to 2028',
-    details: ["Dean's List, 2025", 'Courses: Data Structures, Databases, Human-Computer Interaction'],
-  },
-]
-
-// --------------------------------------------------------------
-// 9. EXTRAS (OPTIONAL)
+// 8. EXTRAS (OPTIONAL)
 // Nice to have, but not required. Use [] to hide any of them.
 // --------------------------------------------------------------
 
@@ -249,7 +245,7 @@ export const WRITING: Writing[] = [
 ]
 
 // --------------------------------------------------------------
-// 10. CONTACT
+// 9. CONTACT
 // The last section. The big button emails SITE.email.
 // --------------------------------------------------------------
 export const CONTACT: Contact = {

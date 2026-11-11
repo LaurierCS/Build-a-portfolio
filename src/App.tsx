@@ -12,7 +12,6 @@ import type { ComponentType } from 'react'
 import {
   ABOUT,
   CERTIFICATIONS,
-  EDUCATION,
   EXPERIENCE,
   PROJECTS,
   SITE,
@@ -27,7 +26,6 @@ import { useScrollReveal } from './lib/scroll.ts'
 import { About } from './sections/About.tsx'
 import { Certifications } from './sections/Certifications.tsx'
 import { Contact } from './sections/Contact.tsx'
-import { Education } from './sections/Education.tsx'
 import { Experience } from './sections/Experience.tsx'
 import { Footer } from './sections/Footer.tsx'
 import { Hero } from './sections/Hero.tsx'
@@ -45,11 +43,10 @@ type SectionEntry = {
 }
 
 const SECTIONS: SectionEntry[] = [
-  { id: 'about', label: 'About', show: ABOUT.paragraphs.length > 0, inMenu: true, Component: About },
+  { id: 'about', label: 'About', show: ABOUT.paragraphs.length > 0 || ABOUT.education.length > 0, inMenu: true, Component: About },
   { id: 'skills', label: 'Skills', show: SKILLS.length > 0, inMenu: false, Component: Skills },
   { id: 'experience', label: 'Experience', show: EXPERIENCE.length > 0, inMenu: true, Component: Experience },
   { id: 'projects', label: 'Projects', show: PROJECTS.length > 0, inMenu: true, Component: Projects },
-  { id: 'education', label: 'Education', show: EDUCATION.length > 0, inMenu: true, Component: Education },
   { id: 'awards', label: 'Awards', show: CERTIFICATIONS.length > 0, inMenu: false, Component: Certifications },
   { id: 'testimonials', label: 'Testimonials', show: TESTIMONIALS.length > 0, inMenu: false, Component: Testimonials },
   { id: 'writing', label: 'Writing', show: WRITING.length > 0, inMenu: false, Component: Writing },
