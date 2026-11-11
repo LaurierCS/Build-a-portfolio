@@ -20,7 +20,6 @@ export type Site = {
   description: string
   socialImage: string
   favicon: string
-  lastUpdated: string
 }
 
 export type Theme = {
@@ -34,7 +33,6 @@ export type SocialLink = { label: string; url: string; icon: LinkIcon }
 
 export type Fact = { label: string; value: string }
 
-export type About = { paragraphs: string[]; facts: Fact[] }
 
 export type SkillGroup = { group: string; skills: string[] }
 
@@ -80,3 +78,5 @@ export type Writing = {
 }
 
 export type Contact = { heading: string; message: string }
+
+export type About = { paragraphs: string[]; facts: Fact[]; education: School[] }

@@ -66,13 +66,12 @@ STEPS TO FOLLOW:
     1. THE BASICS     name, headline, pitch, photo, resume, email
     2. YOUR LOOK      accent colour, light/dark default, font
     3. YOUR LINKS     GitHub, LinkedIn, and so on
-    4. ABOUT YOU      a few paragraphs and quick facts
+    4. ABOUT YOU      a few paragraphs, quick facts, and your education
     5. SKILLS         grouped into tags
     6. EXPERIENCE     jobs, internships, volunteering, leadership
     7. PROJECTS       your best 3 to 6, with pictures and links
-    8. EDUCATION
-    9. EXTRAS         certifications, testimonials, writing and talks
-   10. CONTACT        the closing message
+    8. EXTRAS         certifications, testimonials, writing and talks
+    9. CONTACT        the closing message
 
    Don't need a section? Empty its list, like  []  and it disappears
    from the page and the menu.

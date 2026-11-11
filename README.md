@@ -25,7 +25,7 @@ Then open `src/data.ts` and work through it from top to bottom. The page in your
 A single-page site with a sticky menu that scrolls smoothly to each section:
 
 - **Hero:** your name, headline, a short pitch, location, an "open to" badge, your photo, "Download resume" and "Get in touch" buttons, and your social links.
-- **About** with a few quick facts, **Skills** in groups, **Experience** as a timeline, **Projects** as cards (with pictures, tags, live and source links, and a bigger card for featured ones), and **Education**.
+- **About** with a few quick facts and your education, **Skills** in groups, **Experience** as a timeline, and **Projects** as cards (with pictures, tags, live and source links, and a bigger card for featured ones).
 - **Extras:** certifications and awards, testimonials, and writing and talks. Empty any of them in `data.ts` and they disappear from the page and the menu.
 - **Contact:** an "Email me" button, a one-click "copy my email" button, and your links.
 - A light and dark mode toggle. It follows the visitor's device setting until they pick one, then remembers their choice.
