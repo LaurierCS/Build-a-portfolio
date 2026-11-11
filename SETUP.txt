@@ -60,17 +60,32 @@ STEPS TO FOLLOW:
 
 
 5. EDIT YOUR PORTFOLIO:
-   Once the site is loaded, customize your content, skills, and theme
-   in the "src/data.ts" file. Follow Steps 1 to 6 at the top of it,
-   then turn on any extras you want from the FEATURE MENU below them.
+   Once the site is loaded, open "src/data.ts". It's the only file you
+   need to change. Work through it from top to bottom:
+
+    1. THE BASICS     name, headline, pitch, photo, resume, email
+    2. YOUR LOOK      accent colour, light/dark default, font
+    3. YOUR LINKS     GitHub, LinkedIn, and so on
+    4. ABOUT YOU      a few paragraphs and quick facts
+    5. SKILLS         grouped into tags
+    6. EXPERIENCE     jobs, internships, volunteering, leadership
+    7. PROJECTS       your best 3 to 6, with pictures and links
+    8. EDUCATION
+    9. EXTRAS         certifications, testimonials, writing and talks
+   10. CONTACT        the closing message
+
+   Don't need a section? Empty its list, like  []  and it disappears
+   from the page and the menu.
 
    Your files go in the "public/" folder. It already has placeholder
    files you can replace (keep the same names, or change the names in
    src/data.ts):
 
-    public/photo.jpg     your headshot
-    public/resume.pdf    your resume (powers the "Download resume" button)
-    public/project.png   an image for Feature E (featured project)
+    public/photo.jpg      your headshot
+    public/resume.pdf     your resume (powers the "Download resume" button)
+    public/project.png    a screenshot for a project card
+    public/og-image.png   the picture shown when you share your link
+                          (1200 x 630; needs SITE.url set to show up)
    The page updates live as you save!
 
 
@@ -116,11 +131,15 @@ TROUBLESHOOTING:
 - Red error text in the terminal or a "pnpm build" failure after editing
   src/data.ts:
   Usually a missing quote, comma, or bracket. The error shows the line
-  number. Compare that line with the examples in the comments.
+  number. Compare that line with the placeholder entries around it.
+
+- The page goes blank or shows an error after editing src/data.ts:
+  Check the terminal for the line number, fix the typo, and save again.
+  The dev server restarts on its own when data.ts changes.
 
 - The "Download resume" button is missing:
   It only appears once public/resume.pdf exists (or whatever file name
-  you set for RESUME in src/data.ts).
+  you set for SITE.resume in src/data.ts).
 
 - Cloud Deployment Note:
   This repo includes pnpm-lock.yaml and a "packageManager" field in

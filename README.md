@@ -11,7 +11,7 @@ pnpm install   # one time, installs everything
 pnpm dev       # runs your site at http://localhost:5173
 ```
 
-Then open `src/data.ts` and follow Steps 1 to 6. The page in your browser updates every time you save.
+Then open `src/data.ts` and work through it from top to bottom. The page in your browser updates every time you save.
 
 | Command | What it does |
 |---|---|
@@ -20,19 +20,31 @@ Then open `src/data.ts` and follow Steps 1 to 6. The page in your browser update
 | `pnpm preview` | Shows the finished `dist/` build, so you can check it before deploying |
 | `pnpm lint` | Looks for common mistakes in the code |
 
+### What you get
+
+A single-page site with a sticky menu that scrolls smoothly to each section:
+
+- **Hero:** your name, headline, a short pitch, location, an "open to" badge, your photo, "Download resume" and "Get in touch" buttons, and your social links.
+- **About** with a few quick facts, **Skills** in groups, **Experience** as a timeline, **Projects** as cards (with pictures, tags, live and source links, and a bigger card for featured ones), and **Education**.
+- **Extras:** certifications and awards, testimonials, and writing and talks. Empty any of them in `data.ts` and they disappear from the page and the menu.
+- **Contact:** an "Email me" button, a one-click "copy my email" button, and your links.
+- A light and dark mode toggle. It follows the visitor's device setting until they pick one, then remembers their choice.
+- Your accent colour and font from `THEME` in `data.ts`, gentle fade-in animations (turned off for people who ask their device for less motion), and a layout that works on phones.
+- The page title, description, and link-preview tags (what shows up when you paste your link into LinkedIn or a chat) are filled in from `SITE` in `data.ts`. Set `SITE.url` once your site is live so link previews can show `public/og-image.png`.
+
 ### Where things live
 
 ```text
-public/              your files: photo.jpg, resume.pdf, project.png
+public/              your files: photo.jpg, resume.pdf, project.png, og-image.png
 src/data.ts          your content, links, and colours (start here)
-src/App.tsx          builds the page from data.ts (tabs, sections, extras)
-src/components/      small pieces like tabs, badges, buttons, and the chart
-src/index.css        the styles (colours and font come from THEME in data.ts)
+src/App.tsx          puts the page together; reorder or add sections here
+src/sections/        one file per section (Hero, About, Projects, ...)
+src/components/      small shared pieces like the menu, tags, and icons
+src/index.css        the styles (colours are variables at the top)
+vite.config.ts       builds the page title and link-preview tags from data.ts
 ```
 
-The site has your photo and details at the top, then tabs for About, Experience, Projects, and Contact. Under the tabs is a feature menu of optional extras (highlights, awards, recommendations, writing and talks, a featured project, a chart, a "Beyond work" section, and a "book a chat" button). Each extra stays hidden until you fill it in.
-
-To add a tab, add a new `{ label, content }` block to the list of tabs in `src/App.tsx`.
+To move a section, change its place in the `SECTIONS` list in `src/App.tsx`. To add one, copy a file in `src/sections/` (like `Skills.tsx`), change it, and add it to that list.
 
 ## Picking a stack
 
@@ -41,7 +53,7 @@ Already know you want to build it your own way? Here's how people usually choose
 ```mermaid
 flowchart TD
     A[Starting a portfolio] --> B{Want to write most of the code yourself?}
-    B -- No --> S[Use the React template in this repo and edit data.ts]
+    B -- No --> S[Use the template in this repo and edit data.ts]
     B -- Yes --> C{Mostly content, or lots of interactivity?}
     C -- Mostly content --> D[Astro]
     C -- Lots of interactivity --> E{Know React already?}
@@ -54,7 +66,7 @@ flowchart TD
     H --> I[Deploy free on GitHub Pages, Vercel, Netlify, or Cloudflare Pages]
 ```
 
-If you can't decide, **Astro + TypeScript + Tailwind** works well for most portfolios. This template uses plain CSS so there's less to learn up front, but you can add Tailwind later.
+If you can't decide, **Astro + TypeScript + Tailwind** works well for most portfolios. This template uses React, Vite, and plain CSS so there's less to learn up front, but you can add Tailwind later.
 
 ## TypeScript or JavaScript
 
