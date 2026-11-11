@@ -45,7 +45,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* A centred column, like Streamlit's page */
+/* A centred column down the middle of the page */
 .page {
   max-width: 736px;
   margin: 0 auto;

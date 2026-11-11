@@ -2,7 +2,7 @@ import { useId, useState, type ReactNode } from 'react'
 
 export type Tab = { label: string; content: ReactNode }
 
-/** A row of tabs like Streamlit's st.tabs. Only the picked tab is shown. */
+/** A row of tabs. Only the picked tab is shown. */
 export function Tabs({ tabs }: { tabs: Tab[] }) {
   const [active, setActive] = useState(0)
   const id = useId()
