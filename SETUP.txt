@@ -8,117 +8,122 @@
 
 STEPS TO FOLLOW:
 
-   You can set this project up two ways: with uv or with plain Python
-   and pip. Both work. We recommend uv.
+   This project uses Node.js to run and pnpm to install its packages.
 
-   WHY UV?
-   uv is a Python package manager, like npm for JavaScript. It's much
-   faster than pip, installs the right Python version for you, creates
-   the virtual environment automatically, and uses a lock file (uv.lock)
-   so everyone gets the exact same package versions.
-
-
-1. OPTION A: UV (RECOMMENDED)
-
-   Install uv (one time):
-    macOS / Linux:   curl -LsSf https://astral.sh/uv/install.sh | sh
-    Windows:         powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-   (Close and reopen your terminal afterwards so the 'uv' command works.)
-
-   Then, from inside this folder:
-
-    uv sync
-    uv run streamlit run src/app.py
-
-   'uv sync' creates a .venv folder and installs everything from uv.lock.
-   Run it again only if the dependencies change.
-   Need another package? Use 'uv add <package>'. It updates
-   pyproject.toml and uv.lock for you.
+   WHY PNPM?
+   pnpm is a package manager for JavaScript, like npm (which comes with
+   Node.js). It's much faster, saves disk space by sharing packages
+   between projects, and uses a lock file (pnpm-lock.yaml) so everyone
+   gets the exact same package versions.
 
 
-2. OPTION B: PLAIN PYTHON + PIP
+1. INSTALL NODE.JS (ONE TIME):
 
-   Needs Python 3.10 or newer (check with: python --version).
-   From inside this folder, create and turn on a virtual environment:
-
-    macOS / Linux:
-     python3 -m venv .venv
-     source .venv/bin/activate
-
-    Windows (PowerShell):
-     py -m venv .venv
-     .venv\Scripts\Activate.ps1
-
-   Install the dependencies and run the app:
-
-    python -m pip install -r requirements.txt
-    python -m streamlit run src/app.py
-
-   Next time, just activate the .venv again before running the app.
-   Need another package? pip install it, then add it to requirements.txt
-   (and tell uv users, or run 'uv add <package>' yourself).
-
-   (Note: If prompted for an email on first run, press Enter to skip it.)
+   Needs Node.js 20.19 or newer (check with: node --version).
+   Download the LTS version from https://nodejs.org and install it.
+   (Close and reopen your terminal afterwards so the 'node' command works.)
 
 
-3. VIEW YOUR APP IN YOUR BROWSER:
-   Streamlit will usually open your browser automatically.
-   If not, open one of these links in your browser:
+2. INSTALL PNPM (ONE TIME):
 
-    http://localhost:8501
+    npm install -g pnpm
+
+   Or use the official installer:
+    macOS / Linux:   curl -fsSL https://get.pnpm.io/install.sh | sh -
+    Windows:         Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
+   (Close and reopen your terminal afterwards so the 'pnpm' command works.)
+
+
+3. INSTALL AND RUN THE SITE:
+
+   From inside this folder:
+
+    pnpm install
+    pnpm dev
+
+   'pnpm install' creates a node_modules folder and installs everything
+   from pnpm-lock.yaml. Run it again only if the dependencies change.
+   Need another package? Use 'pnpm add <package>'. It updates
+   package.json and pnpm-lock.yaml for you.
+
+
+4. VIEW YOUR SITE IN YOUR BROWSER:
+   Open the link printed in your terminal, usually:
+
+    http://localhost:5173
     or
-    http://127.0.0.1:8501
+    http://127.0.0.1:5173
 
-   (Tip: If "localhost:8501" does not load, "127.0.0.1:8501" bypasses
+   (Tip: If "localhost:5173" does not load, "127.0.0.1:5173" bypasses
     Windows localhost IPv6 resolution issues.)
+   Press Ctrl + C in the terminal to stop it.
 
 
-4. EDIT YOUR PORTFOLIO:
+5. EDIT YOUR PORTFOLIO:
    Once the site is loaded, customize your content, skills, and theme
-   in the "src/data.py" file.
+   in the "src/data.ts" file. Follow Steps 1 to 6 at the top of it,
+   then turn on any extras you want from the FEATURE MENU below them.
 
-   Your files go in the "src/assets/" folder. It already has placeholder
+   Your files go in the "public/" folder. It already has placeholder
    files you can replace (keep the same names, or change the names in
-   src/data.py):
+   src/data.ts):
 
-    src/assets/photo.jpg     your headshot
-    src/assets/resume.pdf    your resume (powers the "Download resume" button)
-    src/assets/project.png   an image for Feature E (featured project)
-   Streamlit will update the page live as you save!
+    public/photo.jpg     your headshot
+    public/resume.pdf    your resume (powers the "Download resume" button)
+    public/project.png   an image for Feature E (featured project)
+   The page updates live as you save!
+
+
+6. BUILD AND DEPLOY:
+   To check the finished site before putting it online:
+
+    pnpm build
+    pnpm preview
+
+   'pnpm build' checks your code for mistakes and puts the finished site
+   in the "dist/" folder. 'pnpm preview' shows that build at
+   http://localhost:4173.
+
+   To put it online for free, push this folder to GitHub and connect it
+   to Vercel, Netlify, Cloudflare Pages, or GitHub Pages. Use
+   'pnpm build' as the build command and 'dist' as the output folder.
+   The README has step-by-step notes for each one.
 
 
 -------------------------------------------------------------------------------
 TROUBLESHOOTING:
 -------------------------------------------------------------------------------
 
-- "streamlit is not recognized as an internal or external command":
-  uv:  uv run streamlit run src/app.py
-  pip: make sure your .venv is activated, then
-       python -m streamlit run src/app.py
+- "pnpm is not recognized" / "pnpm: command not found":
+  Close and reopen your terminal after installing pnpm. If it still fails,
+  check the install guide: https://pnpm.io/installation
 
-- "uv is not recognized" / "uv: command not found":
-  Close and reopen your terminal after installing uv. If it still fails,
-  check the install guide: https://docs.astral.sh/uv/getting-started/installation/
+- "node is not recognized" / "node: command not found":
+  Install Node.js from https://nodejs.org, then close and reopen your
+  terminal.
 
-- Port 8501 is already in use:
-  Streamlit might assign a new port (like http://localhost:8502). Check the
-  "Local URL" printed in your terminal, or force port 8501:
-  add --server.port 8501 to the end of your run command.
+- "Unsupported engine" or errors about your Node.js version:
+  Your Node.js is too old. Install the current LTS from https://nodejs.org.
 
-- Windows: "running scripts is disabled on this system" when activating:
-  Run this once in PowerShell, then try activating again:
+- Port 5173 is already in use:
+  Vite will pick the next free port (like http://localhost:5174). Check the
+  "Local" link printed in your terminal.
+
+- Windows: "running scripts is disabled on this system" when running pnpm:
+  Run this once in PowerShell, then try again:
   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 
-- Ubuntu/Debian: "ensurepip is not available" when creating the .venv:
-  Install the venv package first: sudo apt install python3-venv
-  (or just use uv, which doesn't need it)
+- Red error text in the terminal or a "pnpm build" failure after editing
+  src/data.ts:
+  Usually a missing quote, comma, or bracket. The error shows the line
+  number. Compare that line with the examples in the comments.
 
-- Terminal pauses or hangs at startup:
-  Streamlit may be waiting for an email address. Click into the terminal
-  and press Enter to continue.
+- The "Download resume" button is missing:
+  It only appears once public/resume.pdf exists (or whatever file name
+  you set for RESUME in src/data.ts).
 
 - Cloud Deployment Note:
-  If you deploy your portfolio online (e.g. to Streamlit Community Cloud),
-  this repo already includes both uv.lock and requirements.txt, so the
-  host will know what to install. Set the main file path to: src/app.py
+  This repo includes pnpm-lock.yaml and a "packageManager" field in
+  package.json, so the host will install the exact same versions.
+  Build command: pnpm build     Output folder: dist
 -------------------------------------------------------------------------------
