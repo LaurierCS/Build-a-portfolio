@@ -2,6 +2,8 @@
 
 This repo is a portfolio template built with React, Vite, and TypeScript. All of your content lives in one file, `src/data.ts`, so you can fill in your whole site without touching the rest of the code. When you're ready to change more, the rest of this page covers the usual tools so you can choose what fits you.
 
+**Filled out template repo example**: https://github.com/Flapjacck/built-portfolio
+
 ## Using this template
 
 You need [Node.js](https://nodejs.org) (version 20.19 or newer) and [pnpm](https://pnpm.io). [SETUP.md](SETUP.md) walks through every step, including installing them.
